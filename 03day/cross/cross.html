@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/template-native.js"></script>
+    </head>
+    <body>
+	
+    <input type="button" value="发送跨域请求" id="btn">
+    <script>
+
+    //接收返回来的数据
+    function getInfo(data){
+    	console.log(data);
+    }
+
+    $('#btn').on('click'  , function(){
+    	//创建script标签
+    	var script = document.createElement('script');
+    	script.src = 'cross.php?callback=getInfo';
+    	document.body.appendChild(script);
+    })
+    </script>
+    </body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+    <meta charset="UTF-8">
+    <title>我去获取360搜索接口的数据</title>
+    <script src="../js/jquery.min.js"></script>
+	<script src="../js/template-native.js"></script>
+    <style>
+            *{
+                 margin: 0;
+                 padding: 0;
+            }
+            .box{
+                 margin: 100px auto;
+                 width: 700px;
+            }
+
+            input[type=text]{
+                 width: 500px;
+                 font-size: 28px;
+            }
+            input[type=button]{
+                font-size: 28px;
+            }
+
+            ul{
+                 list-style: none;
+            }
+            ul li{
+                 padding: 5px;
+            }
+            .message{
+               /*  //margin: 0 auto;*/
+                 width: 500px;
+                 border: 1px solid #ccc;
+                 /*margin-left: ;*/
+                 display: none;
+            }
+    </style>
+    
+</head>
+<body>
+
+	<div class="box">
+		<input type="text" id="keyword"><input type="button" value="传智一下">
+		<div class="message">
+
+		</div>
+	</div>
+
+	<script type="text/template" id="tempId">
+    	<% for(var i=0;i<result.length;i++){ %>
+    		<ul>
+    			<li><%=result[i].word%></li>
+    		</ul>
+    	<%}%>
+    </script>
+
+
+	<script>
+
+	function getInfo(data){
+
+			var html = template('tempId',data);
+
+			document.querySelector('.message').innerHTML = html;
+	}
+
+	window.onload = function(){
+
+		
+
+		document.getElementById('keyword').onkeyup = function(){
+
+			var value = this.value;
+
+			if(value.length > 0){
+
+				var script = document.createElement('script');
+
+				script.src = 'https://sug.so.360.cn/suggest?callback=getInfo&encodein=utf-8&encodeout=utf-8&format=json&fields=word,obdata&word='+value;
+
+				document.body.appendChild(script);
+
+				document.querySelector('.message').style.display='block';
+			}else{
+				document.querySelector('.message').style.display='none';
+			}
+		} 
+	}
+</script>
+</body>
+</html>

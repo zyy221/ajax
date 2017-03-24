@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+    <script>
+
+    window.onload = function(){
+   		var cities;
+
+    	var xhr = new XMLHttpRequest();
+
+    	xhr.open('get' , 'province.php');
+
+    	xhr.send(null);
+
+   		xhr.onreadystatechange = function(){
+
+   			if(xhr.readyState == 4 && xhr.status == 200){
+
+   				var data = xhr.responseText;
+
+   				var obj = JSON.parse(data);
+
+   				//获取省份
+   				for(var i=0;i<obj.length;i++){
+
+   					var provinceName = obj[i].provinceName;
+
+   					var option = document.createElement('option');
+
+   					option.innerHTML = provinceName;
+
+   					document.querySelector('#provinceId').appendChild(option);
+   				}
+
+   				//获取省份对应的城市
+   				document.querySelector('#provinceId').onchange = function(){
+   					var provinceName = this.value;
+   					for(var i=0;i<obj.length;i++){
+   						if(obj[i].provinceName == provinceName ){
+   							cities = obj[i].cities;
+   							document.querySelector('#cityId').innerHTML = '<option selected>请选择城市</option>';
+   							document.querySelector('#areaId').innerHTML = '<option selected>请选择区县</option>';
+
+   							for(var i=0;i<cities.length;i++){
+
+   								var cityName = cities[i].cityName;
+
+   								var option = document.createElement('option');
+
+   								option.innerHTML = cityName;
+
+   								document.querySelector('#cityId').appendChild(option);
+   							}
+   						}
+
+   					}
+   				}
+
+   				//获取区县
+   				document.querySelector('#cityId').onchange = function(){
+   					var cityName = this.value;
+   					for(var i=0;i<cities.length;i++){
+   						if(cities[i].cityName == cityName){
+   							var areas = cities[i].areas;
+   							document.querySelector('#areaId').innerHTML = '<option selected>请选择区县</option>';
+
+   							for(var i=0 ; i<areas.length;i++){
+   								var areaName = areas[i].areaName;
+
+   								var option = document.createElement('option');
+
+   								option.innerHTML = areaName;
+
+   								document.querySelector('#areaId').appendChild(option);
+
+   							}
+   						}
+   					}
+   				}
+   			}
+   		}
+
+    	
+    	
+    }
+
+
+    </script>
+
+    <select id="provinceId">
+    	<option selected>请选择省份</option>
+    </select>
+    <select id="cityId">
+    	<option selected>请选城市</option>
+    </select>
+    <select id="areaId">
+    	<option selected>请选择区县</option>
+    </select>
+    </body>
+</html>

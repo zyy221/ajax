@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <script src="../js/jquery.min.js"></script>
+        <script src="../js/template-native.js"></script>
+        <style>
+        table {
+            width: 600px;
+            border-collapse: collapse;
+        }
+        td {
+            height: 40px;
+            text-align: center;
+            border: 1px solid #CCC;
+        }
+    </style>
+    </head>
+    <body>
+    <!-- 模板解析数据 -->
+	<script type="text/template" id="tempId">
+	  <% for(var i=0;i<rows.length;i++){%>
+		<tr>
+			<td><%=rows[i].username%></td>
+			<td><%=rows[i].age%></td>
+			<td><%=rows[i].zym%></td>
+			<td><%=rows[i].wh%></td>
+			<td><%=rows[i].operation%></td>
+		</tr>
+
+	  <% }%>
+	</script>
+
+	<input type="button" value="ajax 获取数据，模板解析" id="btn">
+	<table>
+		
+		<tr>
+			<td>用户名</td>
+            <td>年龄</td>
+            <td>座右铭</td>
+            <td>外号</td>
+            <td>操作</td>
+		</tr>
+	</table>
+	
+
+	<script>
+	$(function(){
+
+		$('#btn').on('click',function(){
+
+			$.ajax({
+				url:'template.php',
+				type:'get',
+				success:function(data){
+
+					var array = JSON.parse(data);
+
+					var obj = {
+
+						rows : array
+					}
+
+					var html = template('tempId',obj);
+
+					$('table').append(html);
+				}
+			})
+		})
+
+	})
+
+	</script>
+    </body>
+</html>

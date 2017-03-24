@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body>
+    <script>
+    function ajax(obj){
+
+    	var xhr = new XMLHttpRequest();
+    	//判断是 get方式提交 还是 post方式提交
+    	if(obj.type.toLocaleLowerCase() == 'get'){
+    		obj.url = obj.url + '?' +obj.data;
+    		obj.data = null;
+    	}
+    	xhr.open(obj.type , obj.url);
+    	if(obj.type.toLocaleLowerCase() == 'post'){
+    		xhr.setRequestHeader('Content-Type' , 'application/x-www-form-urlencoded');
+    	}
+    	xhr.send(obj.data);
+    	xhr.onreadystatechange = function(){
+    		if(xhr.readyState == 4 && xhr.status == 200){
+    			var data = xhr.responseText;
+    			// console.log(data);
+                obj.success(data);
+    		}
+    	}
+
+    }
+
+    ajax({
+    	url:'./post.php',
+    	type:'post',
+    	data:'username=zhangying',
+        success:function(data){
+            console.log(data);
+        }
+    });
+    </script>
+    </body>
+</html>

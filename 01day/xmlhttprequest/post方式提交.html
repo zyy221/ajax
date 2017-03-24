@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>使用XMLHttpRequest实现post方式提交</title>
+    </head>
+    <body>
+    <input type="button" value="post方式提交" >
+	<form action="" enctype=""></form>
+    <script>
+    document.querySelector('input[type=button]').onclick=function(){
+    	//创建xmlhttprequest
+    	var xhr = new XMLHttpRequest();
+    	//打开连接
+    	xhr.open('post' , 'post.php');
+    	//post方式的提交有一个特殊的请求头
+    	xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+
+    	//向服务端发送数据
+    	xhr.send('username=张颖');
+    	//根据一个回调函数接收服务端返回来的数据
+    	xhr.onreadystatechange = function(){
+    		//判断服务端是否响应完成且是否响应成功
+    		if(xhr.readyState == 4 && xhr.status == 200){
+    			var data = xhr.responseText;
+    			alert(data);
+    		}
+    	}
+    }
+    </script>
+    </body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>使用底层的XMLHttpRequest去发送get方式提交http请求</title>
+    </head>
+    <body>
+    <input type="button" value="get方式发送http请求-XMLHttpRequest">
+
+    <script>
+    //绑定事件 
+    document.querySelector('input[type=button]').onclick = function(){
+    	//创建一个XMLHttpRequest
+    	var xhr = new XMLHttpRequest();
+
+    	//打开连接 open(type , url)
+    	//get方式提交的参数在地址栏的后面
+    	xhr.open('get' , 'get.php?username=zhangying&desc=生日快乐');
+
+    	//向服务端发送请求
+    	xhr.send(null);
+
+    	//根据一个回调函数接收服务端返回来的数据
+    	xhr.onreadystatechange = function(){
+    		//判断服务端是否响应完成 与 是否相应成功
+    		if(xhr.readyState == 4 && xhr.status == 200){
+
+    			//接收服务端响应回来的数据
+    			var data = xhr.responseText;
+
+    			alert(data);
+    		}
+    	}
+    }
+    </script>
+    </body>
+</html>

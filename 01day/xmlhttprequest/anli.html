@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>案例</title>
+    </head>
+    <body>
+    用户名:<input type="text" placeholder="请输入正确的姓名" id="ipt">
+    <button>注册</button>
+    <div></div>
+	
+    <script>
+   
+    	document.querySelector('button').onclick= function(){
+    		//创建XMLHttpRuquest
+    		var xhr = new XMLHttpRequest();
+    		//获取用户输入的名称
+    		var username = document.querySelector('#ipt').value;
+    		// alert(username);
+
+    		//打开连接
+    		xhr.open('POST' , 'anli.php');
+    		//post有一个特殊的请求头
+    		xhr.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+
+    		//向服务端发送数据
+    		xhr.send('username'+username);
+    		//回调函数 接收服务端返回来的数据
+    		xhr.onreadystatechange=function(){
+                if(xhr.readyState==4 && xhr.status==200){
+                    var data=xhr.responseText;
+                    document.querySelector("div").innetHTML=data;
+                }
+            }
+    	}
+   
+    </script>
+
+    </body>
+</html>
